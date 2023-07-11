@@ -1,0 +1,12 @@
+asgiref==3.7.2
+Django==4.2.3
+django-nested-admin==4.0.0
+django-super-inlines==0.2.1
+djangorestframework==3.14.0
+psycopg2-binary==2.9.6
+python-dotenv==1.0.0
+python-monkey-business==1.0.0
+pytz==2023.3
+six==1.16.0
+sqlparse==0.4.4
+tzdata==2023.3

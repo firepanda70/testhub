@@ -1,0 +1,42 @@
+{% extends 'base.html' %}
+{% load custom_filters %}
+{% block title %}
+  Тест {{ poll.title|maketitle }}
+{% endblock %}
+{% block content %}
+<div class="container py-5">
+  <div class="row">
+    <aside class="col-12 col-md-4">
+      <ul class="list-group list-group-flush">
+        <li class="list-group-item">
+          Дата создания: {{ poll.create_date }}
+        </li>
+        <li class="list-group-item">
+          Дата обновления: {{ poll.update_date }}
+        </li>
+        <li class="list-group-item">
+          Количество вопросов: {{ question_amount }}
+        </li>
+      </ul>
+    </aside>
+    <article class="col-12 col-md-8">
+      <h2>{{ poll.title }}</h2>
+      <div class="card mb-3 mt-1 shadow-sm">
+        <div class="card-body">
+          <p class="card-text">
+            {{ poll.description|linebreaksbr }}
+          </p>
+        </div>
+      </div>
+      <a class="btn btn-sm btn-primary" href="{% url 'polls:take_poll' poll.pk %}" role="button">
+        Пройти тест
+      </a>
+      {% if completed %}
+      <a class="btn btn-sm btn-primary" href="" role="button">
+        Посмотреть результат
+      </a>
+      {% endif %}
+    </article>
+  </div> 
+</div>
+{% endblock %}

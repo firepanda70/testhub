@@ -1,0 +1,9 @@
+{% load static %} 
+<nav class="navbar navbar-expand-lg navbar-light bg-light" style="background-color: lightskyblue">
+  <div class="container">
+    <a class="navbar-brand" href="{% url 'polls:index' %}">
+      <span style="color:red">Test</span>hub
+    </a>
+    {% include 'includes/nav.html' %}
+  </div>
+</nav>   

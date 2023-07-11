@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+{% block title %}
+  Доступные тестирования
+{% endblock %}
+{% block content %}
+  <div class="container py-5">
+    <h1>Доступные тестирования</h1>
+    {% for row in rows %}
+      <div class="row mb-4">
+      {% for poll in row %}
+        {% include 'polls/includes/poll_card.html' %}
+      {% endfor %}
+      
+      </div>
+    {% endfor %}
+    {% include 'polls/includes/paginator.html' %}
+  </div>
+{% endblock %}
