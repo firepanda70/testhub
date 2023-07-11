@@ -22,8 +22,8 @@ python manage.py collectstatic
 ```
 - Profit!
 
-Сервер будет доступен на [localhost](http://localhost/)
-Админка [тут](http://localhost/admin/)
+Сервер будет доступен на [localhost](http://localhost/)<br>
+Админка [тут](http://localhost/admin/)<br>
 Данные админки:
 ```
 login: admin
