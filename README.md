@@ -32,6 +32,6 @@ pass: admin
 
 ### Технологии
 - django
-- Docker
+- docker-compose
 - gunicorn
 - dotenv
