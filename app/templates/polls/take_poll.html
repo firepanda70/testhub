@@ -4,33 +4,59 @@
   Тест {{ poll.title|maketitle }}
 {% endblock %}
 {% block content %}
-{% load custom_filters %}
+{% load static %}
+<script src="{% static 'js\hider.js' %}"></script>
 <div class="container py-5">
   <div class="row justify-content-center">
+    <h4 class="row justify-content-center">Тестирование "{{ poll.title }}"</h4>
     <div class="col-md-8 p-5">
+      {% if errors %}
+        {% for key, value in errors.items %}
+          <div class="alert alert-danger" role="alert">
+            {{ key }} {{value}}
+          </div>
+        {% endfor %}
+      {% endif %}
       <form
         method="post"
         enctype="multipart/form-data"
         action="{% url 'polls:take_poll' poll.id %}"
       >
       {% csrf_token %}
-      {% for question in questions %}
-      <div class="card">
+      {% for n, question in questions.items %}
+      <div class="card m-3" id="question-{{ n }}" {% if n != 1 %}style="display: none"{% endif %}>
+        <input type="hidden" name="questions" value="{{ question.pk }}">
         <div class="card-header">
           {{ question.text }}
         </div>
-        <div class="card-body">
+        <ul class="list-group list-group-flush">
         {% for option in question.options.all %}
-        <div>
-          <input type="checkbox">
-          <label>{{ option.text }}</label>
-        </div>
+        <li class="list-group-item">
+          <input type="hidden" name="{{ option.pk }}" value="{{ question.pk }}">
+          <input class="form-check-input" type="checkbox" onclick="checkAllAnswered()" name="{{ option.pk }}">
+          <label class="form-check-label" for="{{ option.pk }}">{{ option.text }}</label>
+        </li>
         {% endfor %}
-        </div>
+        </ul>
       </div>
       {% endfor %}
+      <nav aria-label="Page navigation" class="my-5">
+        <ul class="pagination">
+          {% for question_num in questions.keys %}
+              {% if question_num == 1 %}
+                <li class="page-item active" for="question-{{question_num}}">
+                  <span class="page-link" onclick="showQuestion('question-{{question_num}}')">{{ question_num }}</span>
+                </li>
+              {% else %}
+                <li class="page-item" for="question-{{question_num}}" style="cursor: pointer">
+                  <a class="page-link" onclick="showQuestion('question-{{question_num}}')">{{ question_num }}</a>
+                </li>
+              {% endif %}
+          {% endfor %}
+        </ul>
+      </nav>
       <div class="d-flex justify-content-center">
-        <button type="submit" class="btn btn-primary">
+        <button type="submit" class="btn btn-primary" disabled>
             Завершить
         </button>
       </div>

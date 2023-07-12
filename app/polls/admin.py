@@ -62,3 +62,24 @@ class AdminZonePoll(admin.ModelAdmin):
         else:
             self.form = PoolCreateForm
         return super(AdminZonePoll, self).get_form(request, obj, **kwargs)
+
+
+@admin.register(CompletedPool)
+class AdminZoneCompletedPool(admin.ModelAdmin):
+    list_display = (
+        'pk', 'title', 'origin', 'user', 'question_amount',
+        'correct_answers_amount', 'persentage', 'attempt'
+    )
+    readonly_fields = (
+        'origin', 'user', 'question_amount', 'title',
+        'correct_answers_amount', 'persentage', 'attempt'
+    )
+
+@admin.register(AnsweredQuestion)
+class AdminZoneAnsweredQuestion(admin.ModelAdmin):
+    list_display = (
+        'pk', 'text', 'pool', 'origin', 'is_correct'
+    )
+    readonly_fields = (
+        'text', 'pool', 'origin', 'is_correct'
+    )

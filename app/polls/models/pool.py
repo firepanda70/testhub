@@ -1,3 +1,4 @@
+from typing import Iterable, Optional
 from django.utils import timezone
 
 from django.core.exceptions import ValidationError
@@ -54,7 +55,9 @@ class Poll(BasePool):
 class CompletedPool(BasePool):
 
     class Meta(BasePool.Meta):
-        pass
+        verbose_name = 'Завершенный тест'
+        verbose_name_plural = 'Завершенные тесты'
+        ordering = ('-date_completed', )
 
     user = models.ForeignKey(
         User,
@@ -69,11 +72,13 @@ class CompletedPool(BasePool):
     )
     question_amount = models.IntegerField(
         'Общее количество вопросов',
-        help_text='Общее количество вопросов'
+        help_text='Общее количество вопросов',
+        default=0
     )
     correct_answers_amount = models.IntegerField(
         'Количество правильных ответов',
-        help_text='Количество правильных ответов'
+        help_text='Количество правильных ответов',
+        default=0
     )
     date_completed = models.DateTimeField(
         'Дата завершения',
@@ -84,3 +89,15 @@ class CompletedPool(BasePool):
         'Номер попытки',
         help_text='Номер попытки'
     )
+
+    @property
+    def persentage(self):
+        return int(self.correct_answers_amount / self.question_amount * 100)
+
+    def save(self, *args, **kwargs) -> None:
+        self.title = self.title or self.origin.title
+        if self.pk:
+            questions = self.questions
+            self.question_amount = questions.count()
+            self.correct_answers_amount = questions.filter(is_correct=True).count()
+        return super().save(*args, **kwargs)

@@ -1,10 +1,16 @@
 {% with request.resolver_match.view_name as view_name %}
 <div class="collapse navbar-collapse" id="navbar-example">
   <ul class="navbar-nav mr-auto">
+    <li class="nav-item"> 
+      <a class="nav-link {% if view_name  == 'polls:index' %}active{% endif %}" 
+        href="{% url 'polls:index' %}">
+        Главная
+      </a>
+    </li>
     {% if user.is_authenticated %}
       <li class="nav-item"> 
-        <a class="nav-link " 
-          href="{% url 'polls:index' %}">
+        <a class="nav-link link-light {% if view_name  == 'polls:completed_polls' %}active{% endif %}" 
+          href="{% url 'polls:completed_polls'%}">
           История пройденных тестов
         </a>
       </li>

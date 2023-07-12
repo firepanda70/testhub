@@ -31,8 +31,8 @@
       <a class="btn btn-sm btn-primary" href="{% url 'polls:take_poll' poll.pk %}" role="button">
         Пройти тест
       </a>
-      {% if completed %}
-      <a class="btn btn-sm btn-primary" href="" role="button">
+      {% if completed_id %}
+      <a class="btn btn-sm btn-primary" href="{% url 'polls:completed_poll_detail' completed_id %}" role="button">
         Посмотреть результат
       </a>
       {% endif %}

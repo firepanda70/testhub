@@ -1,0 +1,13 @@
+<div class="col-sm-4">
+    <div class="card border-dark text-white {% if poll.question_amount == poll.correct_answers_amount %}bg-success{% else %}bg-warning{% endif %}">
+      <div class="card-header fs-4 fw-bold">{{ poll.title }}</div>
+      <ul class="list-group list-group-flush">
+        <li class="list-group-item">Всего вопросов: {{ poll.question_amount }}</li>
+        <li class="list-group-item">Верных овтетов: {{ poll.correct_answers_amount }}</li>
+        <li class="list-group-item">Результат: {{ poll.persentage }}%</li>
+        <li class="list-group-item">Номер попытки: {{ poll.attempt }}</li>
+        <li class="list-group-item">Дата прохождения: {{ poll.date_completed }}</li>
+      </ul>
+      <a href="{% url 'polls:completed_poll_detail' poll.pk %}" class="stretched-link"></a>
+    </div>
+  </div>

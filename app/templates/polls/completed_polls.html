@@ -1,14 +1,14 @@
 {% extends 'base.html' %}
 {% block title %}
-  Доступные тестирования
+  История тестироваий
 {% endblock %}
 {% block content %}
   <div class="container py-5">
-    <h1 class="pb-4">Доступные тестирования</h1>
+    <h1 class="pb-5">Пройденные тестирования</h1>
     {% for row in rows %}
       <div class="row mb-4">
       {% for poll in row %}
-        {% include 'polls/includes/poll_card.html' %}
+        {% include 'polls/includes/competed_poll_card.html' %}
       {% endfor %}
       </div>
     {% endfor %}

@@ -1,3 +1,4 @@
+from typing import Iterable, Optional
 from django.db import models
 
 from .base import BaseOption
@@ -47,3 +48,8 @@ class ChosenOption(BaseOption):
         verbose_name='Вопрос',
         help_text='Вариант ответа на вопрос'
     )
+    
+    def save(self, *args, **kwargs) -> None:
+        self.is_correct = self.origin.is_correct
+        self.text = self.origin.text
+        return super().save(*args, **kwargs)

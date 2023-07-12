@@ -43,7 +43,8 @@ class Question(BaseQuestion):
 class AnsweredQuestion(BaseQuestion):
 
     class Meta(BaseQuestion.Meta):
-        pass
+        verbose_name = 'Отвеченный вопрос'
+        verbose_name_plural = 'Отвеченные вопросы'
 
     origin = models.ForeignKey(
         Question,
@@ -59,5 +60,12 @@ class AnsweredQuestion(BaseQuestion):
     )
     is_correct = models.BooleanField(
         'Правильность ответа',
-        help_text='Правильность ответа'
+        help_text='Правильность ответа',
+        default=False
     )
+
+    def save(self, *args, **kwargs) -> None:
+        self.text = self.text or self.origin.text
+        if self.pk:
+            self.is_correct = all([answer.is_correct == answer.is_chosen for answer in self.options.all()])
+        return super().save(*args, **kwargs)

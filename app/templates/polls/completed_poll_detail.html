@@ -1,0 +1,37 @@
+{% extends 'base.html' %}
+{% load custom_filters %}
+{% block title %}
+  Тест {{ poll.title|maketitle }}
+{% endblock %}
+{% block content %}
+{% load custom_filters %}
+<div class="container py-5">
+  <div class="row justify-content-center">
+    <h4 class="row justify-content-center">Результаты тестирования "{{ poll.title }}"</h4>
+    <div class="col-md-8 p-5">
+      {% for answer in answers %}
+      <div class="card m-3 text-white {% if answer.is_correct %} bg-success {% else %} bg-warning {% endif %}">
+        <div class="card-header">
+          {{ answer.text }}
+        </div>
+        <ul class="list-group list-group-flush">
+        {% for option in answer.options.all %}
+        <li class="list-group-item">
+          <input class="form-check-input" type="checkbox" {% if option.is_chosen %} checked {% endif %} id="flexCheckDisabled" disabled>
+          <label class="form-check-label" for="flexCheckDisabled">
+            {{ option.text }}
+          </label>
+        </li>
+        {% endfor %}
+        </ul>
+      </div>
+      {% endfor %}
+      <div class="d-flex justify-content-center">
+      <a class="btn btn-sm btn-primary justify-content-center" href="{% url 'polls:take_poll' poll.origin.pk %}" role="button">
+        Пройти снова
+      </a>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}
